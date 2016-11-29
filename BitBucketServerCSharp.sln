@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BitBucketServerCSharp.IntegrationTests", "test\BitBucketServerCSharp.IntegrationTests\BitBucketServerCSharp.IntegrationTests.xproj", "{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{23EA7152-A128-41C4-B47F-5844DB730B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23EA7152-A128-41C4-B47F-5844DB730B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23EA7152-A128-41C4-B47F-5844DB730B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

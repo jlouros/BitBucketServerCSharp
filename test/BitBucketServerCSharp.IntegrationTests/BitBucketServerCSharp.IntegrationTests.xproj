@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>23ea7152-a128-41c4-b47f-5844db730b14</ProjectGuid>
-    <RootNamespace>BitBucketServerCSharp.UnitTests</RootNamespace>
+    <ProjectGuid>8adfb69f-8023-43c0-8b56-5fa04d73fe4b</ProjectGuid>
+    <RootNamespace>BitBucketServerCSharp.IntegrationTests</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

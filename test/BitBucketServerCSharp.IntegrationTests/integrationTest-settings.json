@@ -1,0 +1,18 @@
+﻿{
+  // Integration tests settings
+  // data required to run this project tests, expecting an actual BitBucket server instance
+  "base-url": "http://localhost:7990/",
+  "username": "TestUser",
+  "password": "password",
+  "existing-project": "test",
+  "existing-repository": "testrepository",
+  "existing-file": "test.txt",
+  "existing-file-in-subfolder": "folder/test.txt",
+  "existing-file-in-subfolder-with-spaces": "my folder/my test.txt",
+  "existing-commit": "4015bb6bd0f49515ae9b4a1ff6d543849d48b1fa",
+  "existing-older-commit": "8fd108bb9640dc8324616ff2144f6bd48c76e5e6",
+  "existing-number-of-changes": "1",
+  "existing-branch-reference": "refs/heads/master",
+  "existing-group": "TestGroup",
+  "existing-hook": "com.atlassian.bitbucket.server.bitbucket-bundled-hooks:force-push-hook"
+}
