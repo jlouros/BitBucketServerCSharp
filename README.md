@@ -1,7 +1,12 @@
-Bitbucket Server API wrapper for .Net
+[![Build status](https://ci.appveyor.com/api/projects/status/e3wnmyfoklqc306u/branch/master?svg=true)](https://ci.appveyor.com/project/jlouros/stashapicsharp/branch/master)
+
+[![NuGet](https://img.shields.io/nuget/v/BitBucketServerCSharp.svg)](https://www.nuget.org/packages/BitBucketServerCSharp/)
+
+
+Bitbucket Server API wrapper for .Net Core
 ============================================================================
 
-C# API wrapper for Atlassian Bitbucket Server
+.Net Core C# API wrapper for Atlassian Bitbucket Server
 For more information about Bitbucket Server visit: https://www.atlassian.com/software/bitbucket/server
 API documentation can be found here: https://developer.atlassian.com/bitbucket/server/docs/latest/
 
