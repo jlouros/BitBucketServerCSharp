@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/e3wnmyfoklqc306u/branch/master?svg=true)](https://ci.appveyor.com/project/jlouros/stashapicsharp/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/75jvf8viifojh6j6/branch/master?svg=true)](https://ci.appveyor.com/project/jlouros/bitbucketservercsharp/branch/master)
 
 [![NuGet](https://img.shields.io/nuget/v/BitBucketServerCSharp.svg)](https://www.nuget.org/packages/BitBucketServerCSharp/)
 
