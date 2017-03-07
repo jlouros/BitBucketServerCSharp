@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
 namespace BitBucketServerCSharp.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public abstract class TestBase
     {
         protected string BASE_URL { get { return _config["base-url"]; } }
@@ -26,7 +26,7 @@ namespace BitBucketServerCSharp.IntegrationTests
 
         private IConfigurationRoot _config;
 
-        [OneTimeSetUp]
+        [TestInitialize]
         public void Initialize()
         {
             // work with with a builder using multiple calls

@@ -1,13 +1,13 @@
 ﻿using BitBucketServerCSharp.Helpers;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace BitBucketServerCSharp.UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public class UrlBuilderTests
     {
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Empty_Url()
         {
             string result = UrlBuilder.FormatRestApiUrl(string.Empty);
@@ -15,13 +15,13 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual(string.Empty, result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Null_Url()
         {
-            Assert.Throws<ArgumentNullException>(() => UrlBuilder.FormatRestApiUrl(null));
+            Assert.ThrowsException<ArgumentNullException>(() => UrlBuilder.FormatRestApiUrl(null));
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Empty_Url_Empty_RequestOptions()
         {
             string result = UrlBuilder.FormatRestApiUrl(string.Empty, new RequestOptions());
@@ -29,31 +29,32 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual(string.Empty, result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Empty_Url_Empty_RequestOptions_Empty_Param()
         {
-            Assert.Throws<ArgumentException>(() => UrlBuilder.FormatRestApiUrl(string.Empty, new RequestOptions(), ""));
+            Assert.ThrowsException<ArgumentException>(() => UrlBuilder.FormatRestApiUrl(string.Empty, new RequestOptions(), ""));
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Validate_Single_Param_Count()
         {
-            Assert.Throws<FormatException>(() => UrlBuilder.FormatRestApiUrl("{0}", null));
+            Assert.ThrowsException<FormatException>(() => UrlBuilder.FormatRestApiUrl("{0}", null));
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Validate_Multiple_Param_Count()
         {
-            Assert.Throws<ArgumentException>(() => UrlBuilder.FormatRestApiUrl("{1}", null, "", "2nd"));
+            Assert.ThrowsException<ArgumentException>(() => UrlBuilder.FormatRestApiUrl("{1}", null, "", "2nd"));
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Empty_Url_Empty_RequestOptions_Null_Param()
         {
-            Assert.Throws<NullReferenceException>(() => UrlBuilder.FormatRestApiUrl(string.Empty, new RequestOptions(), null));
+            
+            Assert.ThrowsException<NullReferenceException>(() => UrlBuilder.FormatRestApiUrl(string.Empty, new RequestOptions(), null));
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Simple_Url_Empty_RequestOptions()
         {
             string result = UrlBuilder.FormatRestApiUrl("none", new RequestOptions());
@@ -61,7 +62,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("none", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Simple_Url_WithLimit_RequestOptions()
         {
             string result = UrlBuilder.FormatRestApiUrl("none", new RequestOptions { Limit = 1 });
@@ -69,7 +70,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("none?limit=1", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Simple_Url_WithLimitAndStart_RequestOptions()
         {
             string result = UrlBuilder.FormatRestApiUrl("none", new RequestOptions { Limit = 1, Start = 25 });
@@ -77,7 +78,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("none?limit=1&start=25", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Simple_Url_WithLimitAndStartAndAt_RequestOptions()
         {
             string result = UrlBuilder.FormatRestApiUrl("none", new RequestOptions { Limit = 1, Start = 25, At = "8" });
@@ -85,7 +86,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("none?limit=1&start=25&at=8", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Simple_Url_WithStart_RequestOptions_Simple_Param()
         {
             string result = UrlBuilder.FormatRestApiUrl("{0}", new RequestOptions { Start = 1 }, "simple");
@@ -93,7 +94,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("simple?start=1", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Full_Url_WithStartAndAt_RequestOptions()
         {
             string result = UrlBuilder.FormatRestApiUrl("http://vcs.test.com/{0}", new RequestOptions { Start = 1, At = "25" }, "foo");
@@ -101,7 +102,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("http://vcs.test.com/foo?start=1&at=25", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Replaceble_Url_WithLimitAndStartAnd_EmptyAt_RequestOptions_Simple_Param()
         {
             string result = UrlBuilder.FormatRestApiUrl("{0}", new RequestOptions { Limit = 1, Start = 25, At = "" }, "some");
@@ -109,7 +110,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("some?limit=1&start=25", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Complex_Combination()
         {
             string result = UrlBuilder.FormatRestApiUrl("hello/{0}-world/{1}?param1=foo&e=%3D%40%24", new RequestOptions { Limit = 1, Start = 25, At = "6641!%23%25" }, "first", "2nd");
@@ -117,7 +118,7 @@ namespace BitBucketServerCSharp.UnitTests
             Assert.AreEqual("hello/first-world/2nd?param1=foo&e=%3D%40%24&limit=1&start=25&at=6641!%23%25", result);
         }
 
-        [Test]
+        [TestMethod]
         public void FormatRestApiUrl_Params_Require_UrlEncode()
         {
             string result = UrlBuilder.FormatRestApiUrl("url/{0}?t={1}", null, "f$2%=1+1", "{2nd}");

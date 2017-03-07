@@ -29,7 +29,7 @@ namespace BitBucketServerCSharp.Workers
 
         public void SetBasicAuthentication(string base64Auth)
         {
-            this.authenticationHeader = new AuthenticationHeaderValue("Basic", base64Auth);
+            authenticationHeader = new AuthenticationHeaderValue("Basic", base64Auth);
         }
 
         public void SetBasicAuthentication(string username, string password)
@@ -49,9 +49,9 @@ namespace BitBucketServerCSharp.Workers
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = this.baseUrl;
 
-            if (this.authenticationHeader != null)
+            if (authenticationHeader != null)
             {
-                httpClient.DefaultRequestHeaders.Authorization = this.authenticationHeader;
+                httpClient.DefaultRequestHeaders.Authorization = authenticationHeader;
             }
 
             return httpClient;

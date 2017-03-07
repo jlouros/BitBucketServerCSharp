@@ -21,14 +21,14 @@ namespace BitBucketServerCSharp
 
         private void InjectDependencies()
         {
-            this.Projects = new Projects(_httpWorker);
-            this.Groups = new Groups(_httpWorker);
-            this.Users = new Users(_httpWorker);
-            this.Repositories = new Repositories(_httpWorker);
-            this.Branches = new Branches(_httpWorker);
-            this.Commits = new Commits(_httpWorker);
-            this.PullRequests = new PullRequests(_httpWorker);
-            this.Forks = new Forks(_httpWorker);
+            Projects = new Projects(_httpWorker);
+            Groups = new Groups(_httpWorker);
+            Users = new Users(_httpWorker);
+            Repositories = new Repositories(_httpWorker);
+            Branches = new Branches(_httpWorker);
+            Commits = new Commits(_httpWorker);
+            PullRequests = new PullRequests(_httpWorker);
+            Forks = new Forks(_httpWorker);
         }
 
         public Projects Projects { get; private set; }

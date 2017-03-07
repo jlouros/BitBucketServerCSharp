@@ -1,7 +1,7 @@
 ﻿using BitBucketServerCSharp.Api;
 using BitBucketServerCSharp.Entities;
 using BitBucketServerCSharp.Helpers;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,19 @@ using System.Threading.Tasks;
 
 namespace BitBucketServerCSharp.IntegrationTests
 {
-    [TestFixture]
+    public static class ExtAssert
+    {
+        public static void IsInstanceOf<T>(object value)
+        {
+            Assert.IsInstanceOfType(value, typeof(T));
+        }
+
+    }
+
+    [TestClass]
     public class BitBucketApiClientTester : TestBase
     {
-        [Test]
+        [TestMethod]
         public async Task Can_GetFileContents()
         {
             var response = await bitBucketApiClient.Repositories.GetFileContents(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_FILE);
@@ -22,7 +31,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             Assert.IsTrue(response.Size > 0);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetFileContents_In_SubFolder()
         {
             var response = await bitBucketApiClient.Repositories.GetFileContents(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_FILE_IN_SUBFOLDER);
@@ -32,7 +41,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             Assert.AreEqual(1, response.Size);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetFileContents_In_SubFolder_With_Spaces()
         {
             var response = await bitBucketApiClient.Repositories.GetFileContents(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_FILE_IN_SUBFOLDER_WITH_SPACES);
@@ -42,7 +51,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             Assert.AreEqual(1, response.Size);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetBranchesForCommit()
         {
             var response = await bitBucketApiClient.Branches.GetByCommitId(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_OLDER_COMMIT);
@@ -51,18 +60,18 @@ namespace BitBucketServerCSharp.IntegrationTests
             Assert.IsTrue(response.Values.Any(x => x.Id.Equals(EXISTING_BRANCH_REFERENCE)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllProjects()
         {
             var response = await bitBucketApiClient.Projects.Get();
             var projects = response.Values;
 
             Assert.IsNotNull(projects);
-            Assert.IsInstanceOf<IEnumerable<Project>>(projects);
+            ExtAssert.IsInstanceOf<IEnumerable<Project>>(projects);
             Assert.IsTrue(projects.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllProjects_WithRequestOptions()
         {
             int requestLimit = 1;
@@ -70,32 +79,32 @@ namespace BitBucketServerCSharp.IntegrationTests
             var projects = response.Values;
 
             Assert.IsNotNull(projects);
-            Assert.IsInstanceOf<IEnumerable<Project>>(projects);
+            ExtAssert.IsInstanceOf<IEnumerable<Project>>(projects);
             Assert.AreEqual(requestLimit, projects.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetByIdProject()
         {
             var project = await bitBucketApiClient.Projects.GetById(EXISTING_PROJECT);
 
             Assert.IsNotNull(project);
-            Assert.IsInstanceOf<Project>(project);
+            ExtAssert.IsInstanceOf<Project>(project);
             Assert.AreEqual(EXISTING_PROJECT.ToLower(), project.Name.ToLower());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllRepositories()
         {
             var response = await bitBucketApiClient.Repositories.Get(EXISTING_PROJECT);
             var repositories = response.Values;
 
             Assert.IsNotNull(repositories);
-            Assert.IsInstanceOf<IEnumerable<Repository>>(repositories);
+            ExtAssert.IsInstanceOf<IEnumerable<Repository>>(repositories);
             Assert.IsTrue(repositories.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllRepositories_WithRequestOptions()
         {
             int requestLimit = 1;
@@ -103,32 +112,32 @@ namespace BitBucketServerCSharp.IntegrationTests
             var repositories = response.Values;
 
             Assert.IsNotNull(repositories);
-            Assert.IsInstanceOf<IEnumerable<Repository>>(repositories);
+            ExtAssert.IsInstanceOf<IEnumerable<Repository>>(repositories);
             Assert.AreEqual(requestLimit, repositories.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetByIdRepository()
         {
             var repository = await bitBucketApiClient.Repositories.GetById(EXISTING_PROJECT, EXISTING_REPOSITORY);
 
             Assert.IsNotNull(repository);
-            Assert.IsInstanceOf<Repository>(repository);
+            ExtAssert.IsInstanceOf<Repository>(repository);
             Assert.AreEqual(EXISTING_REPOSITORY.ToLower(), repository.Name.ToLower());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllTags()
         {
             var response = await bitBucketApiClient.Repositories.GetTags(EXISTING_PROJECT, EXISTING_REPOSITORY);
             var tags = response.Values;
 
             Assert.IsNotNull(tags);
-            Assert.IsInstanceOf<IEnumerable<Tag>>(tags);
+            ExtAssert.IsInstanceOf<IEnumerable<Tag>>(tags);
             Assert.IsTrue(tags.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllTags_WithRequestOptions()
         {
             int requestLimit = 1;
@@ -136,11 +145,11 @@ namespace BitBucketServerCSharp.IntegrationTests
             var tags = response.Values;
 
             Assert.IsNotNull(tags);
-            Assert.IsInstanceOf<IEnumerable<Tag>>(tags);
+            ExtAssert.IsInstanceOf<IEnumerable<Tag>>(tags);
             Assert.AreEqual(requestLimit, tags.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_Create_And_Delete_Tags()
         {
             var initialResponse = await bitBucketApiClient.Repositories.GetTags(EXISTING_PROJECT, EXISTING_REPOSITORY);
@@ -173,18 +182,18 @@ namespace BitBucketServerCSharp.IntegrationTests
             Assert.AreEqual(initialTagCount, finalTagCount);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllFiles()
         {
             var response = await bitBucketApiClient.Repositories.GetFiles(EXISTING_PROJECT, EXISTING_REPOSITORY);
             var files = response.Values;
 
             Assert.IsNotNull(files);
-            Assert.IsInstanceOf<IEnumerable<string>>(files);
+            ExtAssert.IsInstanceOf<IEnumerable<string>>(files);
             Assert.IsTrue(files.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllFiles_WithRequestOptions()
         {
             int requestLimit = 1;
@@ -192,44 +201,44 @@ namespace BitBucketServerCSharp.IntegrationTests
             var files = response.Values;
 
             Assert.IsNotNull(files);
-            Assert.IsInstanceOf<IEnumerable<string>>(files);
+            ExtAssert.IsInstanceOf<IEnumerable<string>>(files);
             Assert.AreEqual(requestLimit, files.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllBranches()
         {
             var response = await bitBucketApiClient.Branches.Get(EXISTING_PROJECT, EXISTING_REPOSITORY);
             var branches = response.Values;
 
             Assert.IsNotNull(branches);
-            Assert.IsInstanceOf<IEnumerable<Branch>>(branches);
+            ExtAssert.IsInstanceOf<IEnumerable<Branch>>(branches);
             Assert.IsTrue(branches.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task GetPullRequest_RetrieveAllPullRequests_ReturnsSomePullRequests()
         {
             var response = await bitBucketApiClient.PullRequests.Get(EXISTING_PROJECT, EXISTING_REPOSITORY, state: PullRequestState.ALL);
             var pullRequests = response.Values;
 
             Assert.IsNotNull(pullRequests);
-            Assert.IsInstanceOf<IEnumerable<PullRequest>>(pullRequests);
+            ExtAssert.IsInstanceOf<IEnumerable<PullRequest>>(pullRequests);
             Assert.IsTrue(pullRequests.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task GetPullRequest_WithRequestOptions_ReturnsSomePullRequests()
         {
             var response = await bitBucketApiClient.PullRequests.Get(EXISTING_PROJECT, EXISTING_REPOSITORY, new RequestOptions { Limit = 1 }, state: PullRequestState.ALL);
             var pullRequests = response.Values;
 
             Assert.IsNotNull(pullRequests);
-            Assert.IsInstanceOf<IEnumerable<PullRequest>>(pullRequests);
+            ExtAssert.IsInstanceOf<IEnumerable<PullRequest>>(pullRequests);
             Assert.IsTrue(pullRequests.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllBranches_WithRequestOptions()
         {
             int requestLimit = 1;
@@ -237,22 +246,22 @@ namespace BitBucketServerCSharp.IntegrationTests
             var branches = response.Values;
 
             Assert.IsNotNull(branches);
-            Assert.IsInstanceOf<IEnumerable<Branch>>(branches);
+            ExtAssert.IsInstanceOf<IEnumerable<Branch>>(branches);
             Assert.AreEqual(requestLimit, branches.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllCommits()
         {
             var response = await bitBucketApiClient.Commits.Get(EXISTING_PROJECT, EXISTING_REPOSITORY);
             var commits = response.Values;
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<IEnumerable<Commit>>(commits);
+            ExtAssert.IsInstanceOf<IEnumerable<Commit>>(commits);
             Assert.IsTrue(commits.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllCommits_WithRequestOptions()
         {
             int requestLimit = 2;
@@ -260,11 +269,11 @@ namespace BitBucketServerCSharp.IntegrationTests
             var commits = response.Values;
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<IEnumerable<Commit>>(commits);
+            ExtAssert.IsInstanceOf<IEnumerable<Commit>>(commits);
             Assert.AreEqual(requestLimit, commits.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetAllCommits_WithRequestOptionsForCommits()
         {
             int expectedCommitCount = 1;
@@ -272,150 +281,150 @@ namespace BitBucketServerCSharp.IntegrationTests
             var commits = response.Values;
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<IEnumerable<Commit>>(commits);
+            ExtAssert.IsInstanceOf<IEnumerable<Commit>>(commits);
             Assert.AreEqual(expectedCommitCount, commits.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetByIdCommit()
         {
             var commit = await bitBucketApiClient.Commits.GetById(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT);
 
             Assert.IsNotNull(commit);
-            Assert.IsInstanceOf<Commit>(commit);
+            ExtAssert.IsInstanceOf<Commit>(commit);
             Assert.AreEqual(EXISTING_COMMIT.ToLower(), commit.Id.ToLower());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetChangesUntil()
         {
             var changes = await bitBucketApiClient.Commits.GetChanges(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT);
 
             Assert.IsNotNull(changes);
-            Assert.IsInstanceOf<Changes>(changes);
+            ExtAssert.IsInstanceOf<Changes>(changes);
             Assert.AreEqual(EXISTING_COMMIT.ToLower(), changes.ToHash.ToLower());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetChangesUntil_WithRequestOptions()
         {
             int requestLimit = 1;
             var changes = await bitBucketApiClient.Commits.GetChanges(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, null, new RequestOptions { Limit = requestLimit });
 
             Assert.IsNotNull(changes);
-            Assert.IsInstanceOf<Changes>(changes);
+            ExtAssert.IsInstanceOf<Changes>(changes);
             Assert.AreEqual(EXISTING_COMMIT.ToLower(), changes.ToHash.ToLower());
             Assert.AreEqual(requestLimit, changes.ListOfChanges.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetChangesUntil_And_Since()
         {
             var changes = await bitBucketApiClient.Commits.GetChanges(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, EXISTING_OLDER_COMMIT);
 
             Assert.IsNotNull(changes);
-            Assert.IsInstanceOf<Changes>(changes);
+            ExtAssert.IsInstanceOf<Changes>(changes);
             Assert.AreEqual(EXISTING_COMMIT.ToLower(), changes.ToHash.ToLower());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetChangesUntil_And_Since_WithRequestOptions()
         {
             int requestLimit = 1;
             var changes = await bitBucketApiClient.Commits.GetChanges(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, EXISTING_OLDER_COMMIT, new RequestOptions { Limit = requestLimit });
 
             Assert.IsNotNull(changes);
-            Assert.IsInstanceOf<Changes>(changes);
+            ExtAssert.IsInstanceOf<Changes>(changes);
             Assert.AreEqual(EXISTING_COMMIT.ToLower(), changes.ToHash.ToLower());
             Assert.AreEqual(requestLimit, changes.ListOfChanges.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetChangesUntil_And_Since_MoreThanOneResult()
         {
             var changes = await bitBucketApiClient.Commits.GetChanges(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, EXISTING_OLDER_COMMIT);
 
             Assert.IsNotNull(changes);
-            Assert.IsInstanceOf<Changes>(changes);
+            ExtAssert.IsInstanceOf<Changes>(changes);
             Assert.IsTrue(EXISTING_COMMIT.Equals(changes.ToHash, StringComparison.OrdinalIgnoreCase));
             Assert.AreEqual(EXISTING_NUMBER_OF_CHANGES, changes.ListOfChanges.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetCommitsUntil()
         {
             var commits = await bitBucketApiClient.Commits.GetCommits(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT);
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
+            ExtAssert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
             Assert.IsTrue(commits.Values.Count() > 1);
             Assert.IsTrue(commits.Values.Any(x => x.Id.Equals(EXISTING_COMMIT, StringComparison.OrdinalIgnoreCase)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetCommitsUntil_WithRequestOptions()
         {
             int requestLimit = 1;
             var commits = await bitBucketApiClient.Commits.GetCommits(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, null, new RequestOptions { Limit = requestLimit });
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
+            ExtAssert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
             Assert.IsTrue(commits.Values.Count() > 0);
             Assert.IsTrue(commits.Values.Any(x => x.Id.Equals(EXISTING_COMMIT, StringComparison.OrdinalIgnoreCase)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetCommitsUntil_And_Since()
         {
             var commits = await bitBucketApiClient.Commits.GetCommits(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, EXISTING_OLDER_COMMIT);
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
+            ExtAssert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
             Assert.IsTrue(commits.Values.Count() > 0);
             Assert.IsTrue(commits.Values.Any(x => x.Id.Equals(EXISTING_COMMIT, StringComparison.OrdinalIgnoreCase)));
             // excluside call (excludes 'since' commit)
             Assert.IsFalse(commits.Values.Any(x => x.Id.Equals(EXISTING_OLDER_COMMIT, StringComparison.OrdinalIgnoreCase)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetCommitsUntil_And_Since_WithRequestOptions()
         {
             int requestLimit = 1;
             var commits = await bitBucketApiClient.Commits.GetCommits(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, EXISTING_OLDER_COMMIT, new RequestOptions { Limit = requestLimit });
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
+            ExtAssert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
             Assert.IsTrue(commits.Values.Count() > 0);
             Assert.IsTrue(commits.Values.Any(x => x.Id.Equals(EXISTING_COMMIT, StringComparison.OrdinalIgnoreCase)));
             // excluside call (excludes 'since' commit)
             Assert.IsFalse(commits.Values.Any(x => x.Id.Equals(EXISTING_OLDER_COMMIT, StringComparison.OrdinalIgnoreCase)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetCommitsUntil_And_Since_MoreThanOneResult()
         {
             var commits = await bitBucketApiClient.Commits.GetCommits(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_COMMIT, EXISTING_OLDER_COMMIT);
 
             Assert.IsNotNull(commits);
-            Assert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
+            ExtAssert.IsInstanceOf<ResponseWrapper<Commit>>(commits);
             Assert.IsTrue(commits.Values.Count() > 0);
             Assert.IsTrue(commits.Values.Any(x => x.Id.Equals(EXISTING_COMMIT, StringComparison.OrdinalIgnoreCase)));
             // excluside call (excludes 'since' commit)
             Assert.IsFalse(commits.Values.Any(x => x.Id.Equals(EXISTING_OLDER_COMMIT, StringComparison.OrdinalIgnoreCase)));
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetRepository_Hooks()
         {
             var response = await bitBucketApiClient.Repositories.GetHooks(EXISTING_PROJECT, EXISTING_REPOSITORY);
             var hooks = response.Values;
 
             Assert.IsNotNull(hooks);
-            Assert.IsInstanceOf<IEnumerable<Hook>>(hooks);
+            ExtAssert.IsInstanceOf<IEnumerable<Hook>>(hooks);
             Assert.IsTrue(hooks.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetRepository_Hooks_WithRequestOptions()
         {
             int requestLimit = 1;
@@ -423,32 +432,32 @@ namespace BitBucketServerCSharp.IntegrationTests
             var hooks = response.Values;
 
             Assert.IsNotNull(hooks);
-            Assert.IsInstanceOf<IEnumerable<Hook>>(hooks);
+            ExtAssert.IsInstanceOf<IEnumerable<Hook>>(hooks);
             Assert.AreEqual(requestLimit, hooks.Count());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetRepository_Hook_ById()
         {
             var response = await bitBucketApiClient.Repositories.GetHookById(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_HOOK);
 
             Assert.IsNotNull(response);
-            Assert.IsInstanceOf<Hook>(response);
+            ExtAssert.IsInstanceOf<Hook>(response);
             Assert.AreEqual(EXISTING_HOOK, response.Details.Key);
         }
 
         #region Feature tests
 
-        [Test]
+        [TestMethod]
         public async Task Can_GetBranchPermissions()
         {
             var response = await bitBucketApiClient.Branches.GetPermissions(EXISTING_PROJECT, EXISTING_REPOSITORY);
 
             Assert.IsNotNull(response);
-            Assert.IsInstanceOf<ResponseWrapper<BranchPermission>>(response);
+            ExtAssert.IsInstanceOf<ResponseWrapper<BranchPermission>>(response);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_SetBranchPermissions_Than_DeleteBranchPermissions()
         {
             BranchPermission setBranchPerm = new BranchPermission
@@ -472,7 +481,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             var response = await bitBucketApiClient.Branches.SetPermissions(EXISTING_PROJECT, EXISTING_REPOSITORY, setBranchPerm);
 
             Assert.IsNotNull(response);
-            Assert.IsInstanceOf<BranchPermission>(response);
+            ExtAssert.IsInstanceOf<BranchPermission>(response);
             Assert.AreEqual(setBranchPerm.Type, response.Type);
             Assert.AreEqual(setBranchPerm.Matcher.Id, response.Matcher.Id);
             Assert.AreEqual(setBranchPerm.Matcher.Type.Id, response.Matcher.Type.Id);
@@ -481,7 +490,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             await bitBucketApiClient.Branches.DeletePermissions(EXISTING_PROJECT, EXISTING_REPOSITORY, response.Id);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_SetBranchPermissions_Than_DeleteBranchPermissions_Using_Pattern()
         {
             BranchPermission setBranchPerm = new BranchPermission
@@ -505,7 +514,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             var response = await bitBucketApiClient.Branches.SetPermissions(EXISTING_PROJECT, EXISTING_REPOSITORY, setBranchPerm);
 
             Assert.IsNotNull(response);
-            Assert.IsInstanceOf<BranchPermission>(response);
+            ExtAssert.IsInstanceOf<BranchPermission>(response);
             Assert.AreEqual(setBranchPerm.Type, response.Type);
             Assert.AreEqual(setBranchPerm.Matcher.Id, response.Matcher.Id);
             Assert.AreEqual(setBranchPerm.Matcher.Type.Id, response.Matcher.Type.Id);
@@ -514,40 +523,40 @@ namespace BitBucketServerCSharp.IntegrationTests
             await bitBucketApiClient.Branches.DeletePermissions(EXISTING_PROJECT, EXISTING_REPOSITORY, response.Id);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_CreateProject_Than_DeleteProject()
         {
             Project newProject = new Project { Key = "ZTEST", Name = "Project of Integration tests", Description = "Project created by integration tests, please delete!" };
             var createdProject = await bitBucketApiClient.Projects.Create(newProject);
 
             Assert.IsNotNull(createdProject);
-            Assert.IsInstanceOf<Project>(createdProject);
+            ExtAssert.IsInstanceOf<Project>(createdProject);
             Assert.AreEqual(newProject.Key.ToLower(), createdProject.Key.ToLower());
 
             await bitBucketApiClient.Projects.Delete(newProject.Key);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_CreateRepository_Than_DeleteRepository()
         {
             Repository newRepository = new Repository { Name = "Repository of Integration tests" };
             var createdRepository = await bitBucketApiClient.Repositories.Create(EXISTING_PROJECT, newRepository);
 
             Assert.IsNotNull(createdRepository);
-            Assert.IsInstanceOf<Repository>(createdRepository);
+            ExtAssert.IsInstanceOf<Repository>(createdRepository);
             Assert.AreEqual(newRepository.Name.ToLower(), createdRepository.Name.ToLower());
 
             await bitBucketApiClient.Repositories.Delete(EXISTING_PROJECT, createdRepository.Slug);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_CreateBranch_Than_DeleteBranch()
         {
             Branch newBranch = new Branch { Name = "test-repo", StartPoint = EXISTING_BRANCH_REFERENCE };
             var createdBranch = await bitBucketApiClient.Branches.Create(EXISTING_PROJECT, EXISTING_REPOSITORY, newBranch);
 
             Assert.IsNotNull(createdBranch);
-            Assert.IsInstanceOf<Branch>(createdBranch);
+            ExtAssert.IsInstanceOf<Branch>(createdBranch);
             Assert.AreEqual(newBranch.Name.ToLower(), createdBranch.DisplayId.ToLower());
 
 
@@ -556,25 +565,25 @@ namespace BitBucketServerCSharp.IntegrationTests
             await bitBucketApiClient.Branches.Delete(EXISTING_PROJECT, EXISTING_REPOSITORY, deleteBranch);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_Get_Enable_And_Disable_Hook()
         {
             var enableHook = await bitBucketApiClient.Repositories.EnableHook(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_HOOK);
 
             Assert.IsNotNull(enableHook);
             Assert.IsTrue(enableHook.Enabled);
-            Assert.IsInstanceOf<Hook>(enableHook);
+            ExtAssert.IsInstanceOf<Hook>(enableHook);
             Assert.AreEqual(EXISTING_HOOK, enableHook.Details.Key);
 
             var disableHook = await bitBucketApiClient.Repositories.DisableHook(EXISTING_PROJECT, EXISTING_REPOSITORY, EXISTING_HOOK);
 
             Assert.IsNotNull(disableHook);
             Assert.IsFalse(disableHook.Enabled);
-            Assert.IsInstanceOf<Hook>(disableHook);
+            ExtAssert.IsInstanceOf<Hook>(disableHook);
             Assert.AreEqual(EXISTING_HOOK, disableHook.Details.Key);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Can_Get_Then_Create_Then_Grant_Access_To_Project_And_Delete_User()
         {
             #region Setup/Clean up
@@ -593,7 +602,7 @@ namespace BitBucketServerCSharp.IntegrationTests
             var deletedUser = await bitBucketApiClient.Users.Delete("tmpTestUser");
 
             Assert.IsNotNull(deletedUser);
-            Assert.IsInstanceOf<User>(deletedUser);
+            ExtAssert.IsInstanceOf<User>(deletedUser);
             Assert.AreEqual("tmpTestUser", deletedUser.Name);
         }
 
