@@ -28,6 +28,15 @@ namespace BitBucketServerCSharp.Api
             _httpWorker = httpWorker;
         }
 
+        public async Task<PullRequest> Update(string projectKey, string repositorySlug, PullRequest pullRequest)
+        {
+            string requestUrl = UrlBuilder.FormatRestApiUrl(PULL_REQUEST + "/" + pullRequest.Id, null, projectKey, repositorySlug);
+
+            PullRequest pr = await _httpWorker.PutAsync(requestUrl, pullRequest);
+
+            return pr;
+        }
+
         public async Task<PullRequest> Create(string projectKey, string repositorySlug, PullRequest pullRequest)
         {
             string requestUrl = UrlBuilder.FormatRestApiUrl(PULL_REQUEST, null, projectKey, repositorySlug);
