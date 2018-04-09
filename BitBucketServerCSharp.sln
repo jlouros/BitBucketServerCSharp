@@ -1,18 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BitBucketServerCSharp", "src\BitBucketServerCSharp\BitBucketServerCSharp.xproj", "{A2B783C3-A3F3-4FB8-B567-9D59FCBDA3CB}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BitBucketServerCSharp.UnitTests", "test\BitBucketServerCSharp.UnitTests\BitBucketServerCSharp.UnitTests.xproj", "{23EA7152-A128-41C4-B47F-5844DB730B14}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C6AD9E14-6CDC-465E-B65C-B6EDE7123CFE}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BitBucketServerCSharp.IntegrationTests", "test\BitBucketServerCSharp.IntegrationTests\BitBucketServerCSharp.IntegrationTests.xproj", "{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitBucketServerCSharp", "src\BitBucketServerCSharp\BitBucketServerCSharp.csproj", "{A2B783C3-A3F3-4FB8-B567-9D59FCBDA3CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitBucketServerCSharp.UnitTests", "test\BitBucketServerCSharp.UnitTests\BitBucketServerCSharp.UnitTests.csproj", "{23EA7152-A128-41C4-B47F-5844DB730B14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitBucketServerCSharp.IntegrationTests", "test\BitBucketServerCSharp.IntegrationTests\BitBucketServerCSharp.IntegrationTests.csproj", "{8ADFB69F-8023-43C0-8B56-5FA04D73FE4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,5 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CBF8268-8ACA-4AA4-B5BE-60A57B84CF94}
 	EndGlobalSection
 EndGlobal

@@ -246,3 +246,4 @@ ModelManifest.xml
 
 # ignore Cake download folder
 tools/
+!tools/packages.config

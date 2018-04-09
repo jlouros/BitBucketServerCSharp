@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>C# API wrapper for Atlassian's BitBucket Server</Description>
+    <AssemblyTitle>BitBucketServerCSharp</AssemblyTitle>
+    <Authors>John Louros</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>BitBucketServerCSharp</AssemblyName>
+    <PackageId>BitBucketServerCSharp</PackageId>
+    <PackageTags>BitBucket;Atlassian;API Wrapper</PackageTags>
+    <PackageIconUrl>https://bitbucket-assetroot.s3.amazonaws.com/c/photos/2013/Feb/11/jetbrains-bitbucket-connector-logo-640104250-0_avatar.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/jlouros/BitBucketServerCSharp</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>
